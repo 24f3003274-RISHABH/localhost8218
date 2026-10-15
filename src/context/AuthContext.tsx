@@ -338,11 +338,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (isSupabaseConfigured) {
-      // Attempting to inject role: 'admin' via client Supabase query
+      // Attempting to inject role: 'platform_admin' via client Supabase query
       // Row Level Security and the prevent_role_escalation trigger must reject this!
       const { error } = await supabase
         .from('profiles')
-        .update({ role: 'admin' } as Record<string, unknown>)
+        .update({ role: 'platform_admin' } as Record<string, unknown>)
         .eq('id', user.id);
 
       if (error) {
@@ -354,8 +354,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       // Check if role actually changed
       const { data } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-      if (data?.role === 'admin') {
-        return { success: true, message: 'CRITICAL SECURITY BREACH: User successfully escalated role to admin!' };
+      if (data?.role === 'platform_admin' || data?.role === 'admin') {
+        return { success: true, message: 'CRITICAL SECURITY BREACH: User successfully escalated role to platform_admin!' };
       }
       return { success: false, message: 'Blocked: Role was not updated.' };
     }

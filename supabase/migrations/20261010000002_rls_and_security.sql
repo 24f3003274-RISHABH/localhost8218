@@ -62,6 +62,17 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
+-- Backfill existing auth.users who registered before this migration ran
+INSERT INTO public.profiles (id, full_name, role, created_at, updated_at)
+SELECT 
+  id, 
+  COALESCE(raw_user_meta_data->>'full_name', split_part(email, '@', 1), 'Student Candidate'), 
+  'student', 
+  created_at, 
+  now()
+FROM auth.users
+ON CONFLICT (id) DO NOTHING;
+
 -- 3. TRIGGER: PREVENT ROLE ESCALATION
 -- Throws error if non-admin attempts to change their own or another user's role
 CREATE OR REPLACE FUNCTION public.prevent_role_escalation()

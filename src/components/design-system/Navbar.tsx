@@ -63,6 +63,14 @@ export function Navbar() {
           <div className="hidden sm:flex items-center gap-3 shrink-0">
             {user ? (
               <>
+                {(profile?.role === 'platform_admin' || profile?.role === 'content_admin' || profile?.role === 'admin') && (
+                  <Link
+                    to="/admin"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100 transition-colors"
+                  >
+                    <span>Admin Console</span>
+                  </Link>
+                )}
                 <Link
                   to="/student/dashboard"
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
@@ -142,6 +150,14 @@ export function Navbar() {
             <div className="pt-3 mt-2 border-t border-slate-100 flex flex-col gap-2">
               {user ? (
                 <>
+                  {(profile?.role === 'platform_admin' || profile?.role === 'content_admin' || profile?.role === 'admin') && (
+                    <Link
+                      to="/admin"
+                      className="w-full text-center px-4 py-2.5 rounded-lg text-sm font-semibold text-teal-700 bg-teal-50 border border-teal-200 transition-colors"
+                    >
+                      Admin Console
+                    </Link>
+                  )}
                   <Link
                     to="/student/dashboard"
                     className="w-full text-center px-4 py-2.5 rounded-lg text-sm font-medium text-blue-700 bg-blue-50 border border-blue-200 transition-colors"
