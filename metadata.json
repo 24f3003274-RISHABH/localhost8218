@@ -1,0 +1,6 @@
+{
+  "name": "PrimePrep",
+  "description": "Comprehensive CUET PG preparation platform featuring NTA-pattern mock tests, detailed explanations, and sectional performance analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
